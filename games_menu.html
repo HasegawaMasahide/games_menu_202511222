@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゲームお品書き</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', 'Yu Gothic', 'YuGothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* タイトルスライド */
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .title-slide h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            letter-spacing: 0.05em;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.8rem;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        .title-slide .date {
+            font-size: 1.3rem;
+            color: #999;
+            margin-top: 20px;
+        }
+
+        .title-slide .instruction {
+            position: absolute;
+            bottom: 40px;
+            font-size: 1.1rem;
+            color: #999;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* ゲームスライド */
+        .game-slide {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .game-image {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .game-category {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            width: fit-content;
+            letter-spacing: 0.05em;
+        }
+
+        .game-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #333;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .game-players {
+            font-size: 1.3rem;
+            color: #764ba2;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .game-description {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .game-appeal {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.7;
+            padding: 20px;
+            background: rgba(118, 75, 162, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .game-appeal::before {
+            content: '✨ ';
+            margin-right: 5px;
+        }
+
+        /* ナビゲーション */
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            color: #666;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* セクション見出し */
+        .section-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .section-slide h2 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .section-slide .icon {
+            font-size: 6rem;
+            margin-bottom: 30px;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 1024px) {
+            .game-slide {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .game-image {
+                height: 350px;
+            }
+
+            .game-title {
+                font-size: 2.3rem;
+            }
+
+            .slide {
+                padding: 40px;
+            }
+
+            .title-slide h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title-slide h1 {
+                font-size: 2.5rem;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
+            .game-description, .game-appeal {
+                font-size: 1rem;
+            }
+
+            .slide {
+                padding: 30px;
+            }
+
+            .section-slide h2 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- タイトルスライド -->
+        <div class="slide active title-slide">
+            <h1>🎮 ゲームお品書き 🎲</h1>
+            <div class="subtitle">今日遊ぶゲームたち</div>
+            <div class="date">テレビゲーム 4種 × ボードゲーム 10種</div>
+            <div class="instruction">← → キーでスライドを切り替え</div>
+        </div>
+
+        <!-- テレビゲームセクション -->
+        <div class="slide section-slide">
+            <div class="icon">🎮</div>
+            <h2>テレビゲーム</h2>
+        </div>
+
+        <!-- マリオカートワールド -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://m.media-amazon.com/images/I/71IOtSAH3BL._AC_SL1004_.jpg" alt="マリオカートワールド">
+            </div>
+            <div class="game-info">
+                <div class="game-category">テレビゲーム</div>
+                <h2 class="game-title">マリオカートワールド</h2>
+                <div class="game-players">👥 最大 4人</div>
+                <div class="game-description">
+                    草原、街、海、火山がつながった世界を最大24人で駆け抜けるレースゲーム
+                </div>
+                <div class="game-appeal">
+                    4人同時プレイ対応、みんなで集まってワイワイ遊ぶのに最適
+                </div>
+            </div>
+        </div>
+
+        <!-- ピコパーク2 -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2644470/header.jpg?t=1760143639" alt="ピコパーク2">
+            </div>
+            <div class="game-info">
+                <div class="game-category">テレビゲーム</div>
+                <h2 class="game-title">ピコパーク2</h2>
+                <div class="game-players">👥 最大 8人</div>
+                <div class="game-description">
+                    最大8人でクロスプラットフォーム対応の協力型アクションパズルに挑戦
+                </div>
+                <div class="game-appeal">
+                    60ステージの協力パズルに加え、対戦やエンドレスモードも充実
+                </div>
+            </div>
+        </div>
+
+        <!-- オーバークック2 -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://store-jp.nintendo.com/dw/image/v2/BFGJ_PRD/on/demandware.static/-/Sites-all-master-catalog/ja_JP/dwfb3f013e/products/D70010000010088/heroBanner/dbf38665080e48dbab879aa6a9a9ea3f85007aa813606fd62d3bcf25e293485a.jpg?sw=1368&strip=false" alt="オーバークック2">
+            </div>
+            <div class="game-info">
+                <div class="game-category">テレビゲーム</div>
+                <h2 class="game-title">オーバークック2</h2>
+                <div class="game-players">👥 最大 4人</div>
+                <div class="game-description">
+                    最大4人で魔法学校や鉱山などのカオスなキッチンで料理を作る協力ゲーム
+                </div>
+                <div class="game-appeal">
+                    瞬間移動や食材投げなど新要素満載、ハチャメチャ感が最高に楽しい
+                </div>
+            </div>
+        </div>
+
+        <!-- カービィのエアライダー -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://m.media-amazon.com/images/I/61HKs0rfALL._AC_SL1000_.jpg" alt="カービィのエアライダー">
+            </div>
+            <div class="game-info">
+                <div class="game-category">テレビゲーム</div>
+                <h2 class="game-title">カービィのエアライダー</h2>
+                <div class="game-players">👥 最大 4人</div>
+                <div class="game-description">
+                    上からの視点で様々なテーマのコースを攻略する、カービィのレースゲーム
+                </div>
+                <div class="game-appeal">
+                    ウエライドモードは4人オフライン対応、シンプル操作で初心者も安心
+                </div>
+            </div>
+        </div>
+
+        <!-- ボードゲームセクション -->
+        <div class="slide section-slide">
+            <div class="icon">🎲</div>
+            <h2>ボードゲーム</h2>
+        </div>
+
+        <!-- ICE COOL -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://m.media-amazon.com/images/I/A1x7AZhUP2L._AC_SL1500_.jpg" alt="ICE COOL">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">ICE COOL</h2>
+                <div class="game-players">👥 最大 4人</div>
+                <div class="game-description">
+                    ペンギンを指ではじいて逃げるor捕まえる、年間子どもゲーム大賞受賞作
+                </div>
+                <div class="game-appeal">
+                    ルールが超シンプル、指先のテクニックで盛り上がる爽快アクション
+                </div>
+            </div>
+        </div>
+
+        <!-- ひらがじゃん【牌】 -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://m.media-amazon.com/images/I/81BXDy0cdCL._AC_SL1500_.jpg" alt="ひらがじゃん【牌】">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">ひらがじゃん【牌】</h2>
+                <div class="game-players">👥 最大 4人</div>
+                <div class="game-description">
+                    ひらがなを使った麻雀風のワードゲーム、言葉を組み合わせて役を作る
+                </div>
+                <div class="game-appeal">
+                    麻雀を知らなくてもOK、語彙力と発想力で勝負できる新感覚ゲーム
+                </div>
+            </div>
+        </div>
+
+        <!-- おばけキャッチ -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://m.media-amazon.com/images/I/41xs-o2mAjL._AC_.jpg" alt="おばけキャッチ">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">おばけキャッチ</h2>
+                <div class="game-players">👥 最大 8人</div>
+                <div class="game-description">
+                    めくられたカードに対応するコマを素早く取る反射神経パーティーゲーム
+                </div>
+                <div class="game-appeal">
+                    最大8人対応、難易度低めで子供から大人まで誰でもすぐ楽しめる
+                </div>
+            </div>
+        </div>
+
+        <!-- ワードバスケット -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://shop.jellyjellycafe.com/html/upload/save_image/0129181036_5a6ee50cb7f0d.jpg" alt="ワードバスケット">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">ワードバスケット</h2>
+                <div class="game-players">👥 最大 8人</div>
+                <div class="game-description">
+                    しりとりベースのスピード勝負、手札を使い切れば勝ちの超定番ゲーム
+                </div>
+                <div class="game-appeal">
+                    語彙力が試される、得意不得意がはっきり分かれて盛り上がる
+                </div>
+            </div>
+        </div>
+
+        <!-- ドデリド -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://www.mobius-games.co.jp/DreiMagier/DoDeLiDo-box.jpg" alt="ドデリド">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">ドデリド</h2>
+                <div class="game-players">👥 最大 6人</div>
+                <div class="game-description">
+                    動物と色を瞬時に判断して宣言する、認識力と反射神経が試されるゲーム
+                </div>
+                <div class="game-appeal">
+                    ルールは単純なのに脳がバグる、最大6人で笑いが絶えない
+                </div>
+            </div>
+        </div>
+
+        <!-- ドラダ -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://m.media-amazon.com/images/I/61fCe04KGRL._AC_SL1001_.jpg" alt="ドラダ">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">ドラダ</h2>
+                <div class="game-players">👥 最大 4人</div>
+                <div class="game-description">
+                    遅くゴールを目指す逆転発想のすごろく、駆け引きが楽しい戦略ゲーム
+                </div>
+                <div class="game-appeal">
+                    わざと遅れる戦略が面白い、家族や友人との駆け引きが白熱する
+                </div>
+            </div>
+        </div>
+
+        <!-- DIVE! -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://arclightgames.jp/wp-content/uploads/2021/04/a0e66705bdcdde6f12158188715168a9-575x575.jpg" alt="DIVE!">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">DIVE!</h2>
+                <div class="game-players">👥 最大 4人</div>
+                <div class="game-description">
+                    透明シートを重ねて海の深さを予測、誰よりも早く海底を目指す競争ゲーム
+                </div>
+                <div class="game-appeal">
+                    スマホライトで照らすと幻想的、美しいビジュアルと戦略性が魅力
+                </div>
+            </div>
+        </div>
+
+        <!-- 狩歌 -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://images.ctfassets.net/dua0zs297hqf/1AOfNtxf2JCaPtFT6aCi7u/d18fd456d6f3cfee997bb01683320e07/caruuta-basic-set.png?q=35&fm=webp" alt="狩歌">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">狩歌</h2>
+                <div class="game-players">👥 最大 8人</div>
+                <div class="game-description">
+                    好きなJ-POPを流しながら歌詞に出てくる言葉のカードを取り合う音楽かるた
+                </div>
+                <div class="game-appeal">
+                    最大8人以上対応、カラオケと相性抜群で何度聴いた曲も新鮮に楽しめる
+                </div>
+            </div>
+        </div>
+
+        <!-- クー -->
+        <div class="slide game-slide">
+            <div class="game-image">
+                <img src="https://m.media-amazon.com/images/I/91zy7A+iz-L._AC_SL1500_.jpg" alt="クー">
+            </div>
+            <div class="game-info">
+                <div class="game-category">ボードゲーム</div>
+                <h2 class="game-title">クー</h2>
+                <div class="game-players">👥 最大 6人</div>
+                <div class="game-description">
+                    持っていないカードでもハッタリOK、バレなきゃ勝ちの心理戦ブラフゲーム
+                </div>
+                <div class="game-appeal">
+                    15分で決着、度胸と演技力が問われる緊張感あふれる読み合いが最高
+                </div>
+            </div>
+        </div>
+
+        <!-- エンディングスライド -->
+        <div class="slide title-slide">
+            <h1>🎉 楽しいひと時を！ 🎉</h1>
+            <div class="subtitle">どのゲームから遊ぶ？</div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" onclick="previousSlide()">←</button>
+        <div class="slide-counter">
+            <span id="current">1</span> / <span id="total">17</span>
+        </div>
+        <button class="nav-button" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // キーボード操作
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // スワイプ操作（モバイル対応）
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchStartX - touchEndX > 50) {
+                nextSlide();
+            }
+            if (touchEndX - touchStartX > 50) {
+                previousSlide();
+            }
+        }
+    </script>
+</body>
+</html>

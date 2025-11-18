@@ -202,6 +202,37 @@
             margin-right: 5px;
         }
 
+        .game-noise-level {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: #666;
+            padding: 12px 18px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .game-noise-level .label {
+            font-weight: 600;
+            color: #f57c00;
+        }
+
+        .noise-icons {
+            display: flex;
+            gap: 3px;
+            font-size: 1.1rem;
+        }
+
+        .noise-icon {
+            opacity: 0.3;
+        }
+
+        .noise-icon.active {
+            opacity: 1;
+        }
+
         /* ナビゲーション */
         .navigation {
             position: fixed;
@@ -359,6 +390,15 @@
             .section-slide .icon {
                 font-size: 4rem;
             }
+
+            .game-noise-level {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+
+            .noise-icons {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -393,6 +433,16 @@
                 <div class="game-appeal">
                     <budoux-ja>4人同時プレイ対応、みんなで集まってワイワイ遊ぶのに最適</budoux-ja>
                 </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -410,6 +460,16 @@
                 </div>
                 <div class="game-appeal">
                     <budoux-ja>60ステージの協力パズルに加え、対戦やエンドレスモードも充実</budoux-ja>
+                </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -429,6 +489,16 @@
                 <div class="game-appeal">
                     <budoux-ja>瞬間移動や食材投げなど新要素満載、ハチャメチャ感が最高に楽しい</budoux-ja>
                 </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -446,6 +516,16 @@
                 </div>
                 <div class="game-appeal">
                     <budoux-ja>ウエライドモードのみ4人オフライン対応、シンプル操作で初心者も安心</budoux-ja>
+                </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -471,6 +551,16 @@
                 <div class="game-appeal">
                     <budoux-ja>ルールが超シンプル、指先のテクニックで盛り上がる爽快アクション</budoux-ja>
                 </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -488,6 +578,16 @@
                 </div>
                 <div class="game-appeal">
                     <budoux-ja>麻雀を知らなくてもOK、語彙力と発想力で勝負できる新感覚ゲーム</budoux-ja>
+                </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -507,6 +607,16 @@
                 <div class="game-appeal">
                     <budoux-ja>最大8人対応、難易度低めで子供から大人まで誰でもすぐ楽しめる</budoux-ja>
                 </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -524,6 +634,16 @@
                 </div>
                 <div class="game-appeal">
                     <budoux-ja>語彙力が試される、得意不得意がはっきり分かれて盛り上がる</budoux-ja>
+                </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -543,6 +663,16 @@
                 <div class="game-appeal">
                     <budoux-ja>ルールは単純なのに脳がバグる、最大6人で笑いが絶えない</budoux-ja>
                 </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -560,6 +690,16 @@
                 </div>
                 <div class="game-appeal">
                     <budoux-ja>わざと遅れる戦略が面白い、家族や友人との駆け引きが白熱する</budoux-ja>
+                </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -579,6 +719,16 @@
                 <div class="game-appeal">
                     <budoux-ja>スマホライトで照らすと幻想的、美しいビジュアルと戦略性が魅力</budoux-ja>
                 </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -597,6 +747,16 @@
                 <div class="game-appeal">
                     <budoux-ja>最大8人以上対応、カラオケと相性抜群で何度聴いた曲も新鮮に楽しめる</budoux-ja>
                 </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -614,6 +774,16 @@
                 </div>
                 <div class="game-appeal">
                     <budoux-ja>15分で決着、度胸と演技力が問われる緊張感あふれる読み合いが最高</budoux-ja>
+                </div>
+                <div class="game-noise-level">
+                    <span class="label">賑やかさ:</span>
+                    <div class="noise-icons">
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon active">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                        <span class="noise-icon">🔊</span>
+                    </div>
                 </div>
             </div>
         </div>

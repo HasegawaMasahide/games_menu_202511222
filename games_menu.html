@@ -32,12 +32,14 @@
             width: 90%;
             max-width: 1200px;
             height: 85vh;
+            max-height: 800px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 60px;
+            padding: 40px 50px;
             position: relative;
             animation: slideIn 0.5s ease-out;
+            overflow-y: auto;
         }
 
         .slide.active {
@@ -56,12 +58,16 @@
         }
 
         /* タイトルスライド */
-        .title-slide {
-            display: flex;
+        .slide.title-slide {
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+        }
+
+        .slide.title-slide.active {
+            display: flex;
         }
 
         .title-slide h1 {
@@ -100,31 +106,41 @@
         }
 
         /* ゲームスライド */
-        .game-slide {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .slide.game-slide {
+            display: none;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
             gap: 50px;
-            align-items: center;
+            align-items: start;
+        }
+
+        .slide.game-slide.active {
+            display: grid;
         }
 
         .game-image {
             width: 100%;
-            height: 500px;
+            max-width: 100%;
+            min-width: 0;
+            height: auto;
+            aspect-ratio: 1 / 1;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            background: white;
         }
 
         .game-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .game-info {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 18px;
+            max-width: 100%;
+            overflow-wrap: break-word;
         }
 
         .game-category {
@@ -140,11 +156,13 @@
         }
 
         .game-title {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: #333;
             line-height: 1.3;
             margin-bottom: 10px;
+            word-break: keep-all;
+            overflow-wrap: break-word;
         }
 
         .game-players {
@@ -155,23 +173,27 @@
         }
 
         .game-description {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #555;
             line-height: 1.8;
-            padding: 20px;
+            padding: 15px 18px;
             background: rgba(102, 126, 234, 0.05);
             border-radius: 15px;
             border-left: 4px solid #667eea;
+            word-break: keep-all;
+            overflow-wrap: break-word;
         }
 
         .game-appeal {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #666;
             line-height: 1.7;
-            padding: 20px;
+            padding: 15px 18px;
             background: rgba(118, 75, 162, 0.05);
             border-radius: 15px;
             border-left: 4px solid #764ba2;
+            word-break: keep-all;
+            overflow-wrap: break-word;
         }
 
         .game-appeal::before {
@@ -220,12 +242,16 @@
         }
 
         /* セクション見出し */
-        .section-slide {
-            display: flex;
+        .slide.section-slide {
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+        }
+
+        .slide.section-slide.active {
+            display: flex;
         }
 
         .section-slide h2 {
@@ -244,13 +270,19 @@
 
         /* レスポンシブ */
         @media (max-width: 1024px) {
-            .game-slide {
+            .slide.game-slide.active {
                 grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
                 gap: 30px;
             }
 
             .game-image {
-                height: 350px;
+                aspect-ratio: 16 / 9;
+                order: 1;
+            }
+
+            .game-info {
+                order: 2;
             }
 
             .game-title {
@@ -258,7 +290,7 @@
             }
 
             .slide {
-                padding: 40px;
+                padding: 35px 40px;
             }
 
             .title-slide h1 {
@@ -267,6 +299,32 @@
         }
 
         @media (max-width: 768px) {
+            .slide {
+                width: 95%;
+                padding: 25px 20px;
+                height: auto;
+                min-height: 85vh;
+                box-sizing: border-box;
+            }
+
+            .slide.game-slide.active {
+                gap: 20px;
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .game-image {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .game-info {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+                box-sizing: border-box;
+            }
+
             .title-slide h1 {
                 font-size: 2.5rem;
             }
@@ -276,19 +334,29 @@
             }
 
             .game-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .game-description, .game-appeal {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                padding: 12px 15px;
             }
 
-            .slide {
-                padding: 30px;
+            .game-players {
+                font-size: 1.1rem;
+            }
+
+            .game-category {
+                font-size: 0.8rem;
+                padding: 6px 15px;
             }
 
             .section-slide h2 {
-                font-size: 3rem;
+                font-size: 2.5rem;
+            }
+
+            .section-slide .icon {
+                font-size: 4rem;
             }
         }
     </style>
@@ -370,13 +438,13 @@
             </div>
             <div class="game-info">
                 <div class="game-category">テレビゲーム</div>
-                <h2 class="game-title">カービィのエアライダー</h2>
+                <h2 class="game-title">カービィのエアライダー（ウエライド）</h2>
                 <div class="game-players">👥 最大 4人</div>
                 <div class="game-description">
                     上からの視点で様々なテーマのコースを攻略する、カービィのレースゲーム
                 </div>
                 <div class="game-appeal">
-                    ウエライドモードは4人オフライン対応、シンプル操作で初心者も安心
+                    ウエライドモードのみ4人オフライン対応、シンプル操作で初心者も安心
                 </div>
             </div>
         </div>
